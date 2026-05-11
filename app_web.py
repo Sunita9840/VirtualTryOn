@@ -33,11 +33,10 @@ run = st.checkbox("Start Camera")
 
 # ---------------- MEDIAPIPE ----------------
 
-face_mesh = mp.solutions.face_mesh.FaceMesh(
+mp_face_mesh = mp.solutions.face_mesh.FaceMesh(
     max_num_faces=1,
     refine_landmarks=True
 )
-
 # ---------------- LOAD IMAGES ----------------
 glasses = cv2.imread("assets/glasses/g1.png", cv2.IMREAD_UNCHANGED)
 hat = cv2.imread("assets/hats/h1.png", cv2.IMREAD_UNCHANGED)
