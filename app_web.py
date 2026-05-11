@@ -84,7 +84,7 @@ while run:
     h, w, _ = frame.shape
 
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    results = face_mesh.process(rgb)
+    results = face_mesh.process(rgb_frame)
 
     if results.multi_face_landmarks:
 
