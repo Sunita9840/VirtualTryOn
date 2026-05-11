@@ -26,13 +26,24 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
+BaseOptions = mp.tasks.BaseOptions
+FaceMesh = mp.tasks.vision.FaceLandmarker
+FaceLandmarkerOptions = mp.tasks.vision.FaceLandmarkerOptions
+VisionRunningMode = mp.tasks.vision.RunningMode
+
+options = FaceLandmarkerOptions(
+    base_options=BaseOptions(model_asset_path="face_landmarker.task"),
+    running_mode=VisionRunningMode.IMAGE
+)
+
+face_mesh = FaceLandmarker.create_from_options(options)
 # ---------------- UI ----------------
 st.title("AI Virtual Try-On (Web Version)")
 
 run = st.checkbox("Start Camera")
+cap = cv2.VideoCapture(0)
 
 # ---------------- MEDIAPIPE ----------------
-
 mp_face_mesh = mp.solutions.face_mesh.FaceMesh(
     max_num_faces=1,
     refine_landmarks=True,
@@ -77,7 +88,7 @@ frame_placeholder = st.image([])
 # ---------------- MAIN LOOP ----------------
 while run:
 
-    success, frame = cap.read()
+    ret, frame = cap.read()
     if not success:
         st.warning("Camera not working")
         break
@@ -86,7 +97,7 @@ while run:
     h, w, _ = frame.shape
 
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    results = face_mesh.process(rgb_frame)
+    results = face_mesh.process(frame)
 
     if results.multi_face_landmarks:
 
