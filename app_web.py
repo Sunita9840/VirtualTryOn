@@ -32,8 +32,8 @@ st.title("AI Virtual Try-On (Web Version)")
 run = st.checkbox("Start Camera")
 
 # ---------------- MEDIAPIPE ----------------
-mp_face_mesh = mp.solutions.face_mesh
-face_mesh = mp_face_mesh.FaceMesh(
+
+face_mesh = mp.solutions.face_mesh.FaceMesh(
     max_num_faces=1,
     refine_landmarks=True
 )
